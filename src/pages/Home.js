@@ -8,6 +8,9 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 
 class Home extends Component {
   render() {
+
+    document.title = 'Ode2Code';
+
     return (
       <div>
         <Jumbotron>

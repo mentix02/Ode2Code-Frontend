@@ -14,7 +14,7 @@ class Contributors extends Component {
 
   getContributors() {
 
-    const url = 'https://api.github.com/repos/mentix02/django/contributors';
+    const url = 'https://api.github.com/repos/mentix02/Ode2Code-Frontend/contributors';
 
     const page = queryString.parse(this.props.location.search).page || 1;
 
@@ -29,15 +29,15 @@ class Contributors extends Component {
     this.getContributors();
   }
 
-
   render() {
 
+    document.title = 'Contributors';
     const {contributors} = this.state;
 
     return (
-      <Container>
+      <Container className="text-center">
         <br/>
-        <h1 className="text-center">Contributors</h1>
+        <h1>Contributors</h1>
         <hr/>
         <CardColumns>
           {contributors.map(

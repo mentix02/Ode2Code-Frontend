@@ -15,27 +15,24 @@ class Footer extends Component {
             <div className="col-6 col-md">
               <h5>Contribute</h5>
               <ul className="list-unstyled text-small">
-                <li><a className="text-muted" href="https://github.com/mentix02/ode2code">Source Code</a></li>
-                <li><a className="text-muted" href="/">Request Feature</a></li>
+                <li><a target="_blank"
+                       className="text-muted"
+                       rel="noopener noreferrer"
+                       href="https://github.com/mentix02/Ode2Code-Frontend">Source Code</a></li>
+                <li><a target="_blank"
+                       className="text-muted"
+                       rel="noopener noreferrer"
+                       href="https://github.com/mentix02/Ode2Code-Frontend/issues/new">Request Feature</a></li>
                 <li><Link className="text-muted" to="/contributors">Contributors & Authors</Link></li>
               </ul>
             </div>
-            <div className="col-6 col-md">
-              <h5>Resources</h5>
-              <ul className="list-unstyled text-small">
-                <li><a className="text-muted" href="/">Resource</a></li>
-                <li><a className="text-muted" href="/">Resource name</a></li>
-                <li><a className="text-muted" href="/">Another resource</a></li>
-                <li><a className="text-muted" href="/">Final resource</a></li>
-              </ul>
-            </div>
+
             <div className="col-6 col-md">
               <h5>About</h5>
               <ul className="list-unstyled text-small">
                 <li><a className="text-muted" href="/">Team</a></li>
                 <li><a className="text-muted" href="/">Locations</a></li>
-                <li><a className="text-muted" href="/">Privacy</a></li>
-                <li><a className="text-muted" href="/">Terms</a></li>
+                <li><a className="text-muted" href="/">Terms & Condition</a></li>
               </ul>
             </div>
           </div>

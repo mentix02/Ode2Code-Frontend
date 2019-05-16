@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
-import { isMobile } from "react-device-detect";
-import {Navbar, Nav, Form, Button, FormControl, InputGroup, Container,} from 'react-bootstrap';
+import { isMobile } from 'react-device-detect';
+import { LinkContainer } from 'react-router-bootstrap';
+import {Navbar, Nav, Form, Button, FormControl, InputGroup, Container, NavDropdown,} from 'react-bootstrap';
 
-const no_decoration = {
-  textDecoration: 'none'
-};
 
 class TopNavbar extends Component {
 
@@ -29,13 +27,11 @@ class TopNavbar extends Component {
   }
 
   shrinkSearchInput() {
-
     if (!isMobile) {
       this.setState({
         searchWidth: '270px'
       });
     }
-
   }
 
   render() {
@@ -43,7 +39,7 @@ class TopNavbar extends Component {
       <Navbar fixed="top" bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand>
-            <Link to="/">
+            <Link to="/home">
               <img
                 src={"/android-chrome-512x512.png"}
                 width="40"
@@ -56,26 +52,32 @@ class TopNavbar extends Component {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Link className="nav-item" style={no_decoration} to="/">
-                <div className="nav-link">
-                  Home
-                </div>
-              </Link>
-              <Link className="nav-item" style={no_decoration} to="/blog">
-                <div className="nav-link">
-                  Blog
-                </div>
-              </Link>
-              <Link className="nav-item" style={no_decoration} to="/algorithms">
-                <div className="nav-link">
-                  Algorithms
-                </div>
-              </Link>
-              <Link className="nav-item" style={no_decoration} to="/data_structures">
-                <div className="nav-link">
-                  Data Structures
-                </div>
-              </Link>
+              <LinkContainer to="/home">
+                <Nav.Link>Home</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/blog">
+                <Nav.Link>Blog</Nav.Link>
+              </LinkContainer>
+              <NavDropdown title="References">
+                <LinkContainer to="/algorithms">
+                  <NavDropdown.Item>
+                    Algorithms
+                  </NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/data_structures">
+                  <NavDropdown.Item>
+                    Data Structures
+                  </NavDropdown.Item>
+                </LinkContainer>
+              </NavDropdown>
+              <NavDropdown title="Guides">
+                <NavDropdown.Item>
+                  Tutorials
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  Documentation
+                </NavDropdown.Item>
+              </NavDropdown>
             </Nav>
             <Form inline>
               <InputGroup>

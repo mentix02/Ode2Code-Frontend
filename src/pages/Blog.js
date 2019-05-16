@@ -1,93 +1,66 @@
 import React, { Component } from 'react';
 
-import { Link } from "react-router-dom";
-import Card from "react-bootstrap/Card";
+import axios from 'axios';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import Container from "react-bootstrap/Container";
 import CardColumns from 'react-bootstrap/CardColumns';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class Blog extends Component {
+
+  slug;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: []
+    }
+  }
+
+  getPosts() {
+
+    const url = 'http://localhost:8000/api/blog/';
+
+    axios.get(url).then(res => {
+      this.setState({
+        posts: res.data
+      });
+    }).catch(res => {
+      console.log(res)
+    })
+
+  }
+
+  componentDidMount() {
+    this.getPosts();
+  }
+
   render() {
+
+    document.title = 'Blog';
+    const {posts} = this.state;
+
     return (
       <Container>
         <br/>
         <CardColumns>
-          <Card>
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
-              <Card.Text>
-                This is a wider card with supporting text below as a natural lead-in to
-                additional content. This content is a little bit longer.
-              </Card.Text>
-              <Link to="/" className="btn btn-primary">Read more</Link>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">15th of May, 2019</small>
-            </Card.Footer>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
-              <Card.Text>
-                This is a wider card with supporting text below as a natural lead-in to
-                additional content. This content is a little bit longer.
-              </Card.Text>
-              <Link to="/" className="btn btn-primary">Read more</Link>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">15th of May, 2019</small>
-            </Card.Footer>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
-              <Card.Text>
-                This is a wider card with supporting text below as a natural lead-in to
-                additional content. This content is a little bit longer.
-              </Card.Text>
-              <Link to="/" className="btn btn-primary">Read more</Link>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">15th of May, 2019</small>
-            </Card.Footer>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
-              <Card.Text>
-                This card has supporting text below as a natural lead-in to additional
-                content.
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">20th March, 2019</small>
-            </Card.Footer>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
-              <Card.Text>
-                This is a wider card with supporting text below as a natural lead-in to
-                additional content. This card has even longer content than the first to
-                show that equal height action.
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">6th of Feb, 2019</small>
-            </Card.Footer>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Card title</Card.Title>
-              <Card.Text>
-                This is a wider card with supporting text below as a natural lead-in to
-                additional content. This card has even longer content than the first to
-                show that equal height action.
-              </Card.Text>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">1st of Jan, 2019</small>
-            </Card.Footer>
-          </Card>
+          {posts.map(
+            (post, index) => (
+              <Card key={index}>
+                <Card.Body>
+                  <Card.Title>{post.title}</Card.Title>
+                  <Card.Text>{post.description}</Card.Text>
+                  <LinkContainer to={`/detail/${post.slug}`}>
+                    <Button variant="primary">Read more</Button>
+                  </LinkContainer>
+                </Card.Body>
+                <Card.Footer>
+                  <small className="text-muted">{post.timestamp}</small>
+                </Card.Footer>
+              </Card>
+            )
+          )}
         </CardColumns>
       </Container>
     );
