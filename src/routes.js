@@ -15,10 +15,10 @@ const BaseRouter = () => (
     <Route path="/blog" component={Blog} />
     <Route path="/home" component={Home} />
     <Route path="/" exact component={Home} />
-    <Route path="/404" component={FourOhFour} status={404} />
     <Route path="/detail/:slug" component={Post} />
     <Route path="/algorithms" component={Algorithms} />
     <Route path="/contributors" component={Contributors} />
+    <Route path="/404" component={FourOhFour} status={404} />
     <Route path="/data_structures" component={DataStructures} />
     <Route component={FourOhFour} status={404} />
   </Switch>
