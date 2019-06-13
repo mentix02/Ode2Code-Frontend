@@ -20,15 +20,16 @@ class Post extends Component {
   getPost() {
 
     const slug = this.props.match.params.slug;
-    const url = `http://localhost:8000/api/blog/${slug}/`;
+    const url = `http://localhost:8000/api/blog/detail/${slug}/`;
 
     axios.get(url).then(res => {
-      document.title = res.data.post.title;
+      document.title = res.data.title;
       this.setState({
-        post: res.data.post,
+        post: res.data,
         redirect: false
       });
     }).catch(res => {
+      console.log(res);
       this.setState({
         redirect: true
       });

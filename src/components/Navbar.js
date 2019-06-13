@@ -10,7 +10,9 @@ class TopNavbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchWidth: '270px'
+      searchWidth: '270px',
+      topMobilePadding: isMobile ? '5px' : '0px',
+      leftMobilePadding: isMobile ? '0px' : '20px'
     };
 
     this.expandSearchInput = this.expandSearchInput.bind(this);
@@ -36,7 +38,7 @@ class TopNavbar extends Component {
 
   render() {
     return (
-      <Navbar fixed="top" bg="dark" variant="dark" expand="lg">
+      <Navbar collapseOnSelect fixed="top" bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand>
             <Link to="/home">
@@ -71,9 +73,11 @@ class TopNavbar extends Component {
                 </LinkContainer>
               </NavDropdown>
               <NavDropdown title="Guides">
-                <NavDropdown.Item>
-                  Tutorials
-                </NavDropdown.Item>
+                <LinkContainer to="/tutorials">
+                  <NavDropdown.Item>
+                    Tutorials
+                  </NavDropdown.Item>
+                </LinkContainer>
                 <NavDropdown.Item>
                   Documentation
                 </NavDropdown.Item>
@@ -98,6 +102,14 @@ class TopNavbar extends Component {
                 </InputGroup.Append>
               </InputGroup>
             </Form>
+            <Nav style={{paddingLeft: this.state.leftMobilePadding, paddingTop: this.state.topMobilePadding}}>
+              <LinkContainer to="/login">
+                <Nav.Link>Login</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/register">
+                <Nav.Link>Register</Nav.Link>
+              </LinkContainer>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>

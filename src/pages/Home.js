@@ -15,7 +15,7 @@ class Home extends Component {
       <div>
         <Jumbotron>
           <Container>
-            <h1>Hello, world!</h1>
+            <h1 className="display-3">Hello, world!</h1>
             <hr/>
             <p>
               Welcome, coder! Ode2Code is an online trove of commonly used algorithms ranging from simple
@@ -35,7 +35,11 @@ class Home extends Component {
               <br/>
               <br/>
               <Link to="/blog" className="btn btn-primary">
-                Read More
+                Blog
+              </Link>
+              &nbsp;&nbsp;
+              <Link to="/tutorials" className="btn btn-success">
+                Tutorials
               </Link>
             </p>
           </Container>
