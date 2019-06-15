@@ -4,7 +4,8 @@ class Logout extends Component {
 
   render() {
 
-    localStorage.removeItem('token');
+    localStorage.clear();
+    localStorage.setItem("showSuccessfulLogoutNotification", true);
     window.location = "/";
     return ""
   }

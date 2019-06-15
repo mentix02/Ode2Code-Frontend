@@ -30,12 +30,17 @@ class TopNavbar extends Component {
   }
 
   componentDidMount() {
-    if (localStorage.getItem("showSuccessfulAuthNotification")) {
+    if (localStorage.getItem("showSuccessfulLoginNotification")) {
       let username = JSON.parse(localStorage.getItem("author")).user.username;
       this.successNotify(
         `Successfully logged in as ${username}.`
       );
-      localStorage.removeItem("showSuccessfulAuthNotification");
+      localStorage.removeItem("showSuccessfulLoginNotification");
+    } else if (localStorage.getItem("showSuccessfulLogoutNotification")) {
+      this.successNotify(
+        `Successfully logged out.`
+      );
+      localStorage.removeItem("showSuccessfulLogoutNotification");
     }
     this.setState({
       authenticated: !!localStorage.getItem('token')
