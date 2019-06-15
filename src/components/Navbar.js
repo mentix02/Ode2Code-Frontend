@@ -2,7 +2,14 @@ import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import { isMobile } from 'react-device-detect';
 import { LinkContainer } from 'react-router-bootstrap';
-import {Navbar, Nav, Form, Button, FormControl, InputGroup, Container, NavDropdown,} from 'react-bootstrap';
+import { Nav,
+         Form,
+         Button,
+         Navbar,
+         Container,
+         InputGroup,
+         FormControl,
+         NavDropdown, } from 'react-bootstrap';
 
 
 class TopNavbar extends Component {
@@ -12,7 +19,8 @@ class TopNavbar extends Component {
     this.state = {
       searchWidth: '270px',
       topMobilePadding: isMobile ? '5px' : '0px',
-      leftMobilePadding: isMobile ? '0px' : '20px'
+      leftMobilePadding: isMobile ? '0px' : '20px',
+      authenticated: !!localStorage.getItem("token"),
     };
 
     this.expandSearchInput = this.expandSearchInput.bind(this);
@@ -102,14 +110,30 @@ class TopNavbar extends Component {
                 </InputGroup.Append>
               </InputGroup>
             </Form>
-            <Nav style={{paddingLeft: this.state.leftMobilePadding, paddingTop: this.state.topMobilePadding}}>
-              <LinkContainer to="/login">
-                <Nav.Link>Login</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/register">
-                <Nav.Link>Register</Nav.Link>
-              </LinkContainer>
-            </Nav>
+            {
+
+              this.state.authenticated
+
+              ?
+
+                <Nav style={{paddingLeft: this.state.leftMobilePadding, paddingTop: this.state.topMobilePadding}}>
+                  <LinkContainer to="/logout">
+                    <Nav.Link>Logout</Nav.Link>
+                  </LinkContainer>
+                </Nav>
+
+                :
+
+                <Nav style={{paddingLeft: this.state.leftMobilePadding, paddingTop: this.state.topMobilePadding}}>
+                  <LinkContainer to="/login">
+                    <Nav.Link>Login</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/register">
+                    <Nav.Link>Register</Nav.Link>
+                  </LinkContainer>
+                </Nav>
+
+            }
           </Navbar.Collapse>
         </Container>
       </Navbar>

@@ -4,16 +4,19 @@ import axios from 'axios';
 
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import { isAuthorsPost } from '../utils/auth';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import CardColumns from 'react-bootstrap/CardColumns';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 class Tutorials extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      tutorials: []
+      tutorials: [],
+      likedTutorialIds: [],
     }
   }
 
@@ -29,6 +32,19 @@ class Tutorials extends Component {
     }).catch(err => {
       console.log(err)
     })
+  }
+
+  getLikedTutorialIds() {
+    let likedTutorialIds = localStorage.getItem('likedTutorialIds');
+    if (likedTutorialIds) {
+      this.setState({
+        likedTutorialIds: JSON.parse(likedTutorialIds)
+      })
+    } else {
+      axios.post(
+        'http://127.0.0.1:8000/api/author/',
+      )
+    }
   }
 
   render() {
@@ -65,24 +81,49 @@ class Tutorials extends Component {
             </p>
           </Container>
         </Jumbotron>
-        <Container className="text-center">
-          <br/>
-          <CardColumns>
-            {
-              this.state.tutorials.map(
-                (tutorial, index) => (
-                  <Card key={index}>
-                    <Card.Body className="text-center">
-                      <Card.Title>
-                        {tutorial.title}
-                      </Card.Title>
-                    </Card.Body>
-                  </Card>
+        <div className="album py-5 bg-light">
+          <Container>
+            <div className="row">
+              {
+                this.state.tutorials.map(
+                  (tutorial, index) => (
+                    <div key={index} className="col-md-4">
+                      <div className="card mb-4 shadow-sm">
+                        <img alt={tutorial.title}
+                             className="bg-placeholder-img card-img-top"
+                             width="100%"
+                             height="225"
+                             src={tutorial.thumbnail || 'https://picsum.photos/1900/1080/?image=1'} />
+                        <Card.Body>
+                          <Card.Title>
+                            {tutorial.title} <small className="text-muted">{tutorial.author}</small>
+                          </Card.Title>
+                          <Card.Text>
+                            {tutorial.description}
+                          </Card.Text>
+                          <div className="d-flex justify-content-between align-items-center">
+                            <ButtonGroup className="shadow-sm">
+                              <Button size="sm" variant="outline-secondary">Read</Button>
+                              <Button size="sm" variant="outline-warning">
+                                <i className="far fa-star" />
+                              </Button>
+                              {
+                                isAuthorsPost(tutorial.author) ? <Button size="sm" variant="outline-success">
+                                  <i className="fas fa-pencil-alt" />
+                                </Button> : ''
+                              }
+                            </ButtonGroup>
+                            <small className="text-muted">{tutorial.timestamp}</small>
+                          </div>
+                        </Card.Body>
+                      </div>
+                    </div>
+                  )
                 )
-              )
-            }
-          </CardColumns>
-        </Container>
+              }
+            </div>
+          </Container>
+        </div>
       </div>
     );
   }

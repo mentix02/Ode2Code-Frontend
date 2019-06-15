@@ -82,13 +82,15 @@ class Blog extends Component {
                 <Card key={index}>
                   <Card.Body>
                     <Card.Title>{post.title}</Card.Title>
-                    <Card.Text>{post.description}</Card.Text>
+                    <Card.Text>
+                      {post.description}
+                    </Card.Text>
                     <LinkContainer to={`/detail/${post.slug}`}>
                       <Button variant="primary">Read more</Button>
                     </LinkContainer>
                   </Card.Body>
                   <Card.Footer>
-                    <small className="text-muted">{post.timestamp}</small>
+                    <small className="text-muted">{post.author} &nbsp; - &nbsp; {post.timestamp}</small>
                   </Card.Footer>
                 </Card>
               )

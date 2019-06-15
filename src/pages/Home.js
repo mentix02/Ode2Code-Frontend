@@ -15,7 +15,7 @@ class Home extends Component {
       <div>
         <Jumbotron>
           <Container>
-            <h1 className="display-3">Hello, world!</h1>
+            <h1 className="display-4">Hello, world!</h1>
             <hr/>
             <p>
               Welcome, coder! Ode2Code is an online trove of commonly used algorithms ranging from simple
