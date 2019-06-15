@@ -56,7 +56,7 @@ class Login extends Component {
 
     e.preventDefault();
 
-    const url = 'http://localhost:8000/api/authors/auth/';
+    const url = '/api/authors/auth/';
 
     let formData = new FormData();
 

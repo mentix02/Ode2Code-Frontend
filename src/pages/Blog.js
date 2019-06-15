@@ -24,7 +24,7 @@ class Blog extends Component {
 
   getPosts() {
 
-    let url = 'http://localhost:8000/api/blog/';
+    let url = '/api/blog/';
 
     if (this.state.next_href) {
       url = this.state.next_href;

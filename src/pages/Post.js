@@ -30,7 +30,7 @@ class Post extends Component {
   getPost() {
 
     const slug = this.props.match.params.slug;
-    const url = `http://localhost:8000/api/blog/detail/${slug}/`;
+    const url = `/api/blog/detail/${slug}/`;
 
     axios.get(url).then(res => {
       document.title = res.data.title;
