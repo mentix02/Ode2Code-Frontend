@@ -5,10 +5,12 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
-import { isAuthorsPost } from '../utils/auth';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { 
+  isLoggedIn,
+  isAuthorsPost } from '../utils/auth';
 
 class Tutorials extends Component {
 
@@ -18,6 +20,7 @@ class Tutorials extends Component {
       tutorials: [],
       likedTutorialIds: [],
     }
+    this.getLikedTutorialIds = this.getLikedTutorialIds.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +35,13 @@ class Tutorials extends Component {
     }).catch(err => {
       console.log(err)
     })
+    this.getLikedTutorialIds();
+  }
+
+  likeTutorial(id) {
+    if (isLoggedIn()) {
+      axios.post()
+    }
   }
 
   getLikedTutorialIds() {
@@ -41,9 +51,22 @@ class Tutorials extends Component {
         likedTutorialIds: JSON.parse(likedTutorialIds)
       })
     } else {
-      axios.post(
-        'http://127.0.0.1:8000/api/author/',
-      )
+      let authData = new FormData()
+      authData.set('token', localStorage.getItem('token'))
+      if (isLoggedIn()) {
+        axios({
+          method: 'post',
+          url: '/api/authors/liked/tutorials/',
+          data: authData,
+          config: { headers: {'Content-Type': 'multipart/form-data' }}
+        }).then(
+          res => {
+            this.setState({
+              likedTutorialIds: res.data
+            })
+          }
+        );
+      }
     }
   }
 

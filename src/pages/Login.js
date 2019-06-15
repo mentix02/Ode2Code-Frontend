@@ -1,5 +1,4 @@
 import './styles/login.scss';
-import 'react-toastify/dist/ReactToastify.css';
 
 import axios from 'axios';
 import logo from './imgs/logo.png';
@@ -40,12 +39,6 @@ class Login extends Component {
 
   }
 
-  successNotify = (message) => toast.success(
-    message, {
-      position: toast.POSITION.BOTTOM_CENTER
-    }
-  );
-
   errorNotify = (message) => toast.error(
     message, {
       position: toast.POSITION.BOTTOM_CENTER
@@ -74,13 +67,11 @@ class Login extends Component {
           successful_login: true,
           author: res.data.author,
         });
-        this.successNotify(`Successfully logged in as ${res.data.author.user.username}.`);
         console.log(res.data);
         localStorage.setItem("token", res.data.token);
+        localStorage.setItem("showSuccessfulAuthNotification", true)
         localStorage.setItem("author", JSON.stringify(res.data.author));
-        return (
-          <Redirect to="/" />
-        );
+        window.location = "/";
       }
     ).catch(
       err => {

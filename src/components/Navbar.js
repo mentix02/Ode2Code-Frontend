@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import { isMobile } from 'react-device-detect';
@@ -27,6 +28,25 @@ class TopNavbar extends Component {
     this.shrinkSearchInput = this.shrinkSearchInput.bind(this);
 
   }
+
+  componentDidMount() {
+    if (localStorage.getItem("showSuccessfulAuthNotification")) {
+      let username = JSON.parse(localStorage.getItem("author")).user.username;
+      this.successNotify(
+        `Successfully logged in as ${username}.`
+      );
+      localStorage.removeItem("showSuccessfulAuthNotification");
+    }
+    this.setState({
+      authenticated: !!localStorage.getItem('token')
+    })
+  }
+
+  successNotify = (message) => toast.success(
+    message, {
+      position: toast.POSITION.BOTTOM_CENTER
+    }
+  );
 
   expandSearchInput() {
     if (!isMobile) {

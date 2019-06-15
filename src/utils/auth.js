@@ -1,8 +1,10 @@
-function isLoggedIn() {
-	return !!localStorage.getItem("token");
+import axios from 'axios';
+
+let isLoggedIn = () => {
+	return !!localStorage.getItem('token');
 }
 
-function isAuthorsPost(author) {
+let isAuthorsPost = (author) => {
 	if (!isLoggedIn()) {
 		return false;
 	} else {
@@ -11,4 +13,15 @@ function isAuthorsPost(author) {
 	}
 }
 
-export {isLoggedIn, isAuthorsPost};
+let makeAuthenticatedPostRequest = (url, data) => {
+	return axios.post(
+		url,
+		data
+	).then(
+		res => (res.data)
+	).catch(
+		err => (err.response)
+	)
+}
+
+export {isLoggedIn, isAuthorsPost, makeAuthenticatedPostRequest};

@@ -1,16 +1,12 @@
-import React, { Component } from 'react';
-import {Redirect} from "react-router-dom";
-
+import { Component } from 'react';
 
 class Logout extends Component {
 
   render() {
 
     localStorage.removeItem('token');
-
-    return (
-      <Redirect to="/" />
-    );
+    window.location = "/";
+    return ""
   }
 
 }
