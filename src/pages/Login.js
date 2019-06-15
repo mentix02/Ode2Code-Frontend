@@ -101,7 +101,8 @@ class Login extends Component {
                    placeholder="Username" required autoFocus />
             <label htmlFor="password" className="sr-only">Password</label>
             <input type="password" id="password" onChange={this.handleInputChange}
-                   className="form-control" placeholder="Password" required name="password" />
+                   autoComplete="off" className="form-control" placeholder="Password" 
+                   required name="password" />
             <div className="checkbox mb-3">
               <label>
                 <input type="checkbox" name="remember" onChange={this.handleInputChange}
