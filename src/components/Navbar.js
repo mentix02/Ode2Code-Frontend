@@ -142,6 +142,11 @@ class TopNavbar extends Component {
               ?
 
                 <Nav style={{paddingLeft: this.state.leftMobilePadding, paddingTop: this.state.topMobilePadding}}>
+                  <LinkContainer to="/account">
+                    <Nav.Link>{
+                        JSON.parse(localStorage.getItem('author')).user.username
+                      }</Nav.Link>
+                  </LinkContainer>
                   <LinkContainer to="/logout">
                     <Nav.Link>Logout</Nav.Link>
                   </LinkContainer>
