@@ -20,7 +20,6 @@ class Tutorials extends Component {
       tutorials: [],
       likedTutorialIds: [],
     }
-    this.getLikedTutorialIds = this.getLikedTutorialIds.bind(this);
   }
 
   componentDidMount() {
@@ -38,35 +37,61 @@ class Tutorials extends Component {
     this.getLikedTutorialIds();
   }
 
-  likeTutorial(id) {
+  likeTutorial(tutorial_id) {
     if (isLoggedIn()) {
-      axios.post()
+      let tutorialAndAuthData = new FormData();
+      tutorialAndAuthData.set('tutorial_id', tutorial_id);
+      tutorialAndAuthData.set('token', localStorage.getItem('token'));
+      axios({
+        method: 'post',
+        data: tutorialAndAuthData,
+        url: '/api/tutorials/like/',
+        config: {headers: {'Content-Type': 'multipart/form-data'}}
+      }).then(
+        res => {
+          let likedTutorialIds = this.state.likedTutorialIds;
+          if (res.data.action === -1) {
+            for (let i = 0; i < likedTutorialIds.length; i++) {
+              if (likedTutorialIds[i] === tutorial_id) {
+                likedTutorialIds.splice(i, 1);
+              }
+            }
+          } else if (res.data.action === 1) {
+            likedTutorialIds.push(tutorial_id);
+          }
+          console.log(likedTutorialIds);
+          this.setState({
+            likedTutorialIds: likedTutorialIds
+          })
+        }
+      ).catch(
+        err => {console.log(err.response)}
+      );
     }
   }
 
+  likeButtonClick(id) {
+    this.likeTutorial(id);
+  }
+
   getLikedTutorialIds() {
-    let likedTutorialIds = localStorage.getItem('likedTutorialIds');
-    if (likedTutorialIds) {
-      this.setState({
-        likedTutorialIds: JSON.parse(likedTutorialIds)
-      })
-    } else {
-      let authData = new FormData()
-      authData.set('token', localStorage.getItem('token'))
-      if (isLoggedIn()) {
-        axios({
-          method: 'post',
-          url: '/api/authors/liked/tutorials/',
-          data: authData,
-          config: { headers: {'Content-Type': 'multipart/form-data' }}
-        }).then(
-          res => {
-            this.setState({
-              likedTutorialIds: res.data
-            })
-          }
-        );
-      }
+    let authData = new FormData()
+    authData.set('token', localStorage.getItem('token'))
+    if (isLoggedIn()) {
+      axios({
+        data: authData,
+        method: 'post',
+        url: '/api/authors/liked/tutorials/',
+        config: {headers: {'Content-Type': 'multipart/form-data'}}
+      }).then(
+        res => {
+          this.setState({
+            likedTutorialIds: res.data
+          });
+        }
+      ).catch(
+        err => {console.log(err.response)}
+      );
     }
   }
 
@@ -127,8 +152,13 @@ class Tutorials extends Component {
                           <div className="d-flex justify-content-between align-items-center">
                             <ButtonGroup className="shadow-sm">
                               <Button size="sm" variant="outline-secondary">Read</Button>
-                              <Button size="sm" variant="outline-warning">
-                                <i className="far fa-star" />
+                              <Button size="sm" variant={
+                                this.state.likedTutorialIds.includes(tutorial.id) ? 'danger' : 'outline-danger'
+                              } onClick={() => this.likeButtonClick(tutorial.id)}>
+                                  <i className={ 
+                                    this.state.likedTutorialIds.includes(tutorial.id) ? 
+                                    'fas fa-heart' : 'far fa-heart'
+                                    } />
                               </Button>
                               {
                                 isAuthorsPost(tutorial.author) ? <Button size="sm" variant="outline-success">
