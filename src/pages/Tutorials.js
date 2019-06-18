@@ -27,7 +27,7 @@ class Tutorials extends Component {
   }
 
   getTutorials() {
-    axios.get('http://127.0.0.1:8000/api/tutorials/recent/').then(res => {
+    axios.get('/api/tutorials/recent/').then(res => {
       this.setState({
         tutorials: res.data
       })
@@ -59,7 +59,6 @@ class Tutorials extends Component {
           } else if (res.data.action === 1) {
             likedTutorialIds.push(tutorial_id);
           }
-          console.log(likedTutorialIds);
           this.setState({
             likedTutorialIds: likedTutorialIds
           })
