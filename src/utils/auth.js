@@ -1,8 +1,6 @@
-import axios from 'axios';
-
 let isLoggedIn = () => {
 	return !!localStorage.getItem('token');
-}
+};
 
 let isAuthorsPost = (author) => {
 	if (!isLoggedIn()) {
@@ -11,17 +9,6 @@ let isAuthorsPost = (author) => {
 		let username = JSON.parse(localStorage.getItem('author')).user.username;
 		return username === author;
 	}
-}
+};
 
-let makeAuthenticatedPostRequest = (url, data) => {
-	return axios.post(
-		url,
-		data
-	).then(
-		res => (res.data)
-	).catch(
-		err => (err.response)
-	)
-}
-
-export {isLoggedIn, isAuthorsPost, makeAuthenticatedPostRequest};
+export {isLoggedIn, isAuthorsPost};
