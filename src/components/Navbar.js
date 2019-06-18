@@ -106,6 +106,11 @@ class TopNavbar extends Component {
                 </LinkContainer>
               </NavDropdown>
               <NavDropdown title="Guides">
+                <LinkContainer to="/series">
+                  <NavDropdown.Item>
+                    Series
+                  </NavDropdown.Item>
+                </LinkContainer>
                 <LinkContainer to="/tutorials">
                   <NavDropdown.Item>
                     Tutorials
