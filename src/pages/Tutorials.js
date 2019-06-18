@@ -33,7 +33,7 @@ class Tutorials extends Component {
       })
     }).catch(err => {
       console.log(err)
-    })
+    });
     this.getLikedTutorialIds();
   }
 
@@ -74,8 +74,8 @@ class Tutorials extends Component {
   }
 
   getLikedTutorialIds() {
-    let authData = new FormData()
-    authData.set('token', localStorage.getItem('token'))
+    let authData = new FormData();
+    authData.set('token', localStorage.getItem('token'));
     if (isLoggedIn()) {
       axios({
         data: authData,
