@@ -50,9 +50,9 @@ class Blog extends Component {
         });
       }
 
-    }).catch(res => {
-      console.log(res)
-    })
+    }).catch(err => {
+      console.log(err.response);
+    });
 
   }
 
@@ -85,7 +85,7 @@ class Blog extends Component {
                     <Card.Text>
                       {post.description}
                     </Card.Text>
-                    <LinkContainer to={`/detail/${post.slug}`}>
+                    <LinkContainer to={`/post/detail/${post.slug}`}>
                       <Button variant="primary">Read more</Button>
                     </LinkContainer>
                   </Card.Body>
