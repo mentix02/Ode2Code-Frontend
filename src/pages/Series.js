@@ -117,7 +117,7 @@ class Series extends Component {
                           </Card.Text>
                           <div className="d-flex justify-content-between align-items-center">
                             <ButtonGroup className="shadow-sm">
-                              <Link className="btn btn-outline-secondary btn-sm" to={`/detail/series/${series.slug}`}>Details</Link>
+                              <Link className="btn btn-outline-secondary btn-sm" to={`/s/${series.slug}`}>Details</Link>
                               {
                                 isLoggedIn() ? <Button size="sm" variant="outline-primary"><i className="far fa-bookmark" /></Button> : ''
                               }
