@@ -1,98 +1,11 @@
 import React, { Component } from 'react';
 
-import axios from 'axios';
-
-import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { 
-  isLoggedIn,
-  isAuthorsPost } from '../utils/auth';
+import TutorialList from '../components/TutorialList';
 
 class Tutorials extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      tutorials: [],
-      likedTutorialIds: [],
-    }
-  }
-
-  componentDidMount() {
-    this.getTutorials();
-  }
-
-  getTutorials() {
-    axios.get('/api/tutorials/recent/').then(res => {
-      this.setState({
-        tutorials: res.data
-      })
-    }).catch(err => {
-      console.log(err)
-    });
-    this.getLikedTutorialIds();
-  }
-
-  likeTutorial(tutorial_id) {
-    if (isLoggedIn()) {
-      let tutorialAndAuthData = new FormData();
-      tutorialAndAuthData.set('tutorial_id', tutorial_id);
-      tutorialAndAuthData.set('token', localStorage.getItem('token'));
-      axios({
-        method: 'post',
-        data: tutorialAndAuthData,
-        url: '/api/tutorials/like/',
-        config: {headers: {'Content-Type': 'multipart/form-data'}}
-      }).then(
-        res => {
-          let likedTutorialIds = this.state.likedTutorialIds;
-          if (res.data.action === -1) {
-            for (let i = 0; i < likedTutorialIds.length; i++) {
-              if (likedTutorialIds[i] === tutorial_id) {
-                likedTutorialIds.splice(i, 1);
-              }
-            }
-          } else if (res.data.action === 1) {
-            likedTutorialIds.push(tutorial_id);
-          }
-          this.setState({
-            likedTutorialIds: likedTutorialIds
-          })
-        }
-      ).catch(
-        err => {console.log(err.response)}
-      );
-    }
-  }
-
-  likeButtonClick(id) {
-    this.likeTutorial(id);
-  }
-
-  getLikedTutorialIds() {
-    let authData = new FormData();
-    authData.set('token', localStorage.getItem('token'));
-    if (isLoggedIn()) {
-      axios({
-        data: authData,
-        method: 'post',
-        url: '/api/authors/liked/tutorials/',
-        config: {headers: {'Content-Type': 'multipart/form-data'}}
-      }).then(
-        res => {
-          this.setState({
-            likedTutorialIds: res.data
-          });
-        }
-      ).catch(
-        err => {console.log(err.response)}
-      );
-    }
-  }
 
   render() {
 
@@ -128,54 +41,7 @@ class Tutorials extends Component {
             </p>
           </Container>
         </Jumbotron>
-        <div className="album py-5 bg-light">
-          <Container>
-            <div className="row">
-              {
-                this.state.tutorials.map(
-                  (tutorial, index) => (
-                    <div key={index} className="col-md-4">
-                      <div className="card mb-4 shadow-sm">
-                        <img alt={tutorial.title}
-                             className="bg-placeholder-img card-img-top"
-                             width="100%"
-                             height="225"
-                             src={tutorial.thumbnail || 'https://picsum.photos/1900/1080/?image=1'} />
-                        <Card.Body>
-                          <Card.Title>
-                            {tutorial.title} <small className="text-muted">{tutorial.author}</small>
-                          </Card.Title>
-                          <Card.Text>
-                            {tutorial.description}
-                          </Card.Text>
-                          <div className="d-flex justify-content-between align-items-center">
-                            <ButtonGroup className="shadow-sm">
-                              <Button size="sm" variant="outline-secondary">Read</Button>
-                              <Button size="sm" variant={
-                                this.state.likedTutorialIds.includes(tutorial.id) ? 'danger' : 'outline-danger'
-                              } onClick={() => this.likeButtonClick(tutorial.id)}>
-                                  <i className={ 
-                                    this.state.likedTutorialIds.includes(tutorial.id) ? 
-                                    'fas fa-heart' : 'far fa-heart'
-                                    } />
-                              </Button>
-                              {
-                                isAuthorsPost(tutorial.author) ? <Button size="sm" variant="outline-success">
-                                  <i className="fas fa-pencil-alt" />
-                                </Button> : ''
-                              }
-                            </ButtonGroup>
-                            <small className="text-muted">{tutorial.timestamp}</small>
-                          </div>
-                        </Card.Body>
-                      </div>
-                    </div>
-                  )
-                )
-              }
-            </div>
-          </Container>
-        </div>
+        <TutorialList url="/api/tutorials/recent/" series="" has_more_items={false} />
       </div>
     );
   }
