@@ -79,6 +79,7 @@ class TutorialList extends Component {
     axios.get(url).then(
       res => {
         this.setState({
+          has_more_items: false,
           tutorials: res.data.results
         });
       }
