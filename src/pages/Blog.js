@@ -85,7 +85,7 @@ class Blog extends Component {
                     <Card.Text>
                       {post.description}
                     </Card.Text>
-                    <LinkContainer to={`/post/detail/${post.slug}`}>
+                    <LinkContainer to={`/p/${post.slug}`}>
                       <Button variant="primary">Read more</Button>
                     </LinkContainer>
                   </Card.Body>
