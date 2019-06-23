@@ -54,8 +54,8 @@ class SeriesDetail extends Component {
             </p>
           </Container>
         </Jumbotron>
-        { this.state.series.tutorial_count ? <TutorialList series={series.name} url={`/api/series/detail/${series.slug}/tutorials/`} />
-        : <h2 className="text-center">No tutorials yet.</h2>}
+        { this.state.series.tutorial_count ? <TutorialList series_detail={true} series={series.name} url={`/api/series/detail/${series.slug}/tutorials/`} />
+        : <h2 className="text-center">No tutorials yet.</h2> }
       </div>
     );
   }
