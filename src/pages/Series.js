@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import { isLoggedIn } from '../utils/auth';
 import Button from 'react-bootstrap/Button';
+import { toTitleCase } from '../utils/text';
 import Spinner from 'react-bootstrap/Spinner';
 import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
@@ -14,6 +15,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 class Series extends Component {
 
   creator;
+  type_of;
 
   constructor(props) {
     super(props);
@@ -113,6 +115,8 @@ class Series extends Component {
                             <Link to="/">{series.creator}</Link></small>
                           </Card.Title>
                           <Card.Text>
+                            <Link to="">{toTitleCase(series.type_of)}</Link>
+                            <hr/>
                             {series.description}
                           </Card.Text>
                           <div className="d-flex justify-content-between align-items-center">
