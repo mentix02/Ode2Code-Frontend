@@ -12,11 +12,9 @@ import InfiniteScroll from 'react-infinite-scroller';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import {isAuthorsPost, isLoggedIn} from '../utils/auth';
 
-function onlyDifferentIdTuts(value, index, self) {
-  return self.indexOf(value) === index;
-}
-
 class TutorialList extends Component {
+
+  series_detail;
 
   constructor(props) {
     super(props);
@@ -60,10 +58,9 @@ class TutorialList extends Component {
             next_href: res.data.next
           });
         } else {
-          tutorials = tutorials.filter(onlyDifferentIdTuts);
           this.setState({
             has_more_items: false,
-            tutorials: [tutorials],
+            tutorials: tutorials,
           });
         }
 
@@ -187,17 +184,17 @@ class TutorialList extends Component {
                     (tutorial, index) => (
                       <div key={index} className="col-md-4">
                         <div className="card mb-4 shadow-sm">
-                          <img alt={tutorial.title}
+                          { this.props.series_detail ? "" : <img alt={tutorial.title}
                                className="bg-placeholder-img card-img-top"
                                width="100%"
                                height="225"
-                               src={tutorial.thumbnail || 'https://picsum.photos/1900/1080/?image=1'}/>
+                               src={tutorial.thumbnail || 'https://picsum.photos/1900/1080/?image=1'}/>}
                           <Card.Body>
                             <Card.Title>
                               {tutorial.title} <small className="text-muted">{tutorial.author}</small>
                             </Card.Title>
                             <Card.Text>
-                              <Link to={`series/${slugify(tutorial.series || '')}`}><small>{tutorial.series}</small></Link>
+                              <Link to={`s/${slugify(tutorial.series || '')}`}><small>{tutorial.series}</small></Link>
                               <hr />
                               {tutorial.description}
                             </Card.Text>
