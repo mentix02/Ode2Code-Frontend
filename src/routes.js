@@ -10,6 +10,7 @@ import Timeline from './pages/Timeline';
 import Tutorials from './pages/Tutorials';
 import FourOhFour from './pages/FourOhFour';
 import Algorithms from './pages/Algorithms';
+import SeriesType from './pages/SeriesType';
 import SeriesDetail from './pages/SeriesDetail';
 import Contributors from './pages/Contributors';
 import DataStructures from './pages/DataStructures';
@@ -27,6 +28,7 @@ const BaseRouter = () => (
     <Route path="/timeline" component={Timeline} />
     <Route path="/series" exact component={Series} />
     <Route path="/tutorials" component={Tutorials} />
+    <Route path="/t/:slug" component={SeriesType} />
     <Route path="/s/:slug" component={SeriesDetail} />
     <Route path="/algorithms" component={Algorithms} />
     <Route path="/contributors" component={Contributors} />

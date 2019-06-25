@@ -1,24 +1,95 @@
+import axios from 'axios';
+import {Link} from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
 import React, { Component } from 'react';
-import Container from "react-bootstrap/Container";
-import InfiniteScroll from "react-infinite-scroller";
-import Card from "react-bootstrap/Card";
-import {Link} from "react-router-dom";
-import {toTitleCase} from "../utils/text";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import {isLoggedIn} from "../utils/auth";
-import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
-import axios from "axios";
+import { isLoggedIn } from '../utils/auth';
+import { toTitleCase } from '../utils/text';
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import Container from 'react-bootstrap/Container';
+import InfiniteScroll from 'react-infinite-scroller';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 class SeriesList extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      series: [],
+      series: [{
+        id: -1,
+        creator: 'mentix02',
+        type_of: 'Language',
+      }],
       next_href: null,
-      has_more_items: true
+      has_more_items: true,
+      bookmarkedSeriesIds: [],
     }
+  }
+
+  getBookmarkedSeriesIds() {
+    if (isLoggedIn()) {
+      let authData = new FormData();
+      authData.set('token', localStorage.getItem('token'));
+      axios({
+        data: authData,
+        method: 'post',
+        url: '/api/authors/bookmarked/series/',
+        config: {headers: {'Content-Type': 'multipart/form-data'}}
+      }).then(
+        res => {
+          this.setState({
+            bookmarkedSeriesIds: res.data.results
+          });
+        }
+      ).catch(
+        err => {
+          console.log(err.response);
+        }
+      )
+    }
+  }
+
+  bookmarkSeries(series_id) {
+    if (isLoggedIn()) {
+      let seriesAndAuthData = new FormData();
+      seriesAndAuthData.set('series_id', series_id);
+      seriesAndAuthData.set('token', localStorage.getItem('token'));
+      axios({
+        method: 'post',
+        data: seriesAndAuthData,
+        url: '/api/series/bookmark/',
+        config: {headers: {'Content-Type': 'multipart/form-data'}}
+      }).then(
+        res => {
+          console.log(res.data.action);
+          let bookmarkedSeriesIds = this.state.bookmarkedSeriesIds;
+          if (res.data.action === -1) {
+            for (let i = 0; i < bookmarkedSeriesIds.length; i++) {
+              if (bookmarkedSeriesIds[i] === series_id) {
+                bookmarkedSeriesIds.splice(i, 1);
+              }
+            }
+          } else if (res.data.action === 1) {
+            bookmarkedSeriesIds.push(series_id);
+          }
+          this.setState({
+            bookmarkSeriesIds: bookmarkedSeriesIds
+          })
+        }
+      ).catch(
+        err => {
+          console.log(err.response);
+        }
+      )
+    }
+  }
+
+  bookmarkButtonClick(id) {
+    this.bookmarkSeries(id);
+  }
+
+  componentDidMount() {
+    this.getBookmarkedSeriesIds();
   }
 
   getSeries() {
@@ -30,7 +101,7 @@ class SeriesList extends Component {
 
     axios.get(url).then(res => {
 
-      let series = this.state.series;
+      let series = this.state.series[0].id === -1 ? [] : this.state.series;
 
       for (let i = 0; i < res.data.results.length; i++) {
         series.push(res.data.results[i]);
@@ -90,7 +161,7 @@ class SeriesList extends Component {
                             <Link to="/">{series.creator}</Link></small>
                           </Card.Title>
                           <Card.Text>
-                            <Link to="">{toTitleCase(series.type_of)}</Link>
+                            <Link to={`/t/${series.type_of}`}>{toTitleCase(series.type_of.replace('_', ' '))}</Link>
                             <hr/>
                             {series.description}
                           </Card.Text>
@@ -98,7 +169,11 @@ class SeriesList extends Component {
                             <ButtonGroup className="shadow-sm">
                               <Link className="btn btn-outline-secondary btn-sm" to={`/s/${series.slug}`}>Details</Link>
                               {
-                                isLoggedIn() ? <Button size="sm" variant="outline-primary"><i className="far fa-bookmark" /></Button> : ''
+                                isLoggedIn() ? <Button size="sm" onClick={() => this.bookmarkButtonClick(series.id)} variant={
+                                  this.state.bookmarkedSeriesIds.includes(series.id) ? 'primary' : 'outline-primary'
+                                }><i className={
+                                  this.state.bookmarkedSeriesIds.includes(series.id) ?
+                                    "fas fa-bookmark" : "far fa-bookmark"} /></Button> : ''
                               }
                             </ButtonGroup>
                             <small className="text-muted">Started on {series.timestamp}</small>
