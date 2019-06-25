@@ -69,7 +69,7 @@ class Login extends Component {
         });
         console.log(res.data);
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("showSuccessfulLoginNotification", true)
+        localStorage.setItem("showSuccessfulLoginNotification", "true");
         localStorage.setItem("author", JSON.stringify(res.data.author));
         window.location = "/";
       }
