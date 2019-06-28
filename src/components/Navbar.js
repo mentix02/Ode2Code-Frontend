@@ -88,36 +88,36 @@ class TopNavbar extends Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               <LinkContainer to="/home">
-                <Nav.Link>Home</Nav.Link>
+                <Nav.Link>home</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/blog">
-                <Nav.Link>Blog</Nav.Link>
+                <Nav.Link>blog</Nav.Link>
               </LinkContainer>
-              <NavDropdown title="References">
+              <NavDropdown title="references">
                 <LinkContainer to="/algorithms">
                   <NavDropdown.Item>
-                    Algorithms
+                    algorithms
                   </NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to="/data_structures">
                   <NavDropdown.Item>
-                    Data Structures
+                    data structures
                   </NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
-              <NavDropdown title="Guides">
+              <NavDropdown title="guides">
                 <LinkContainer to="/series">
                   <NavDropdown.Item>
-                    Series
+                    series
                   </NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to="/tutorials">
                   <NavDropdown.Item>
-                    Tutorials
+                    tutorials
                   </NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Item>
-                  Documentation
+                  documentation
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -147,13 +147,30 @@ class TopNavbar extends Component {
               ?
 
                 <Nav style={{paddingLeft: this.state.leftMobilePadding, paddingTop: this.state.topMobilePadding}}>
+                  {/*<NavDropdown title="Write">
+                    <LinkContainer to="/new/series">
+                      <NavDropdown.Item>
+                        Series
+                      </NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>*/}
+                  <LinkContainer to="/new/series">
+                    <Nav.Link>
+                      new series
+                    </Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/new/tutorial">
+                    <Nav.Link>
+                      write tutorial
+                    </Nav.Link>
+                  </LinkContainer>
                   <LinkContainer to="/account">
                     <Nav.Link>{
                         JSON.parse(localStorage.getItem('author')).user.username
                       }</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/logout">
-                    <Nav.Link>Logout</Nav.Link>
+                    <Nav.Link>logout</Nav.Link>
                   </LinkContainer>
                 </Nav>
 
