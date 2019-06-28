@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'underscore';
 import {Link} from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import React, { Component } from 'react';
@@ -15,11 +16,7 @@ class SeriesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      series: [{
-        id: -1,
-        creator: 'mentix02',
-        type_of: 'Language',
-      }],
+      series: [],
       next_href: null,
       has_more_items: true,
       bookmarkedSeriesIds: [],
@@ -93,6 +90,7 @@ class SeriesList extends Component {
   }
 
   getSeries() {
+
     let url = this.props.url;
 
     if (this.state.next_href) {
@@ -101,11 +99,15 @@ class SeriesList extends Component {
 
     axios.get(url).then(res => {
 
-      let series = this.state.series[0].id === -1 ? [] : this.state.series;
+      let series = this.state.series;
 
       for (let i = 0; i < res.data.results.length; i++) {
         series.push(res.data.results[i]);
       }
+
+      series = _.uniq(series, true, item => {
+        return item.id
+      });
 
       if (res.data.next) {
         this.setState({
