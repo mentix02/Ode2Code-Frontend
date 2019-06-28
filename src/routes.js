@@ -30,7 +30,7 @@ const BaseRouter = () => (
     <Route path="/series" exact component={Series} />
     <Route path="/new/series" component={NewSeries} />
     <Route path="/tutorials" component={Tutorials} />
-    <Route path="/t/:slug" component={SeriesType} />
+    <Route path="/st/:slug" component={SeriesType} />
     <Route path="/s/:slug" component={SeriesDetail} />
     <Route path="/algorithms" component={Algorithms} />
     <Route path="/contributors" component={Contributors} />

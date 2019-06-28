@@ -51,7 +51,7 @@ class SeriesDetail extends Component {
             <h1 className="display-4">
               {series.name}
             </h1>
-            <Link to={`/t/${series.type_of}`}>
+            <Link to={`/st/${series.type_of}`}>
               <h4 className="text-muted">{toTitleCase(series.type_of || "")}</h4>
             </Link>
             <p>

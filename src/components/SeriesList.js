@@ -163,7 +163,7 @@ class SeriesList extends Component {
                             <Link to="/">{series.creator}</Link></small>
                           </Card.Title>
                           <Card.Text>
-                            <Link to={`/t/${series.type_of}`}>{toTitleCase(series.type_of.replace('_', ' '))}</Link>
+                            <Link to={`/st/${series.type_of}`}>{toTitleCase(series.type_of.replace('_', ' '))}</Link>
                             <hr/>
                             {series.description}
                           </Card.Text>
