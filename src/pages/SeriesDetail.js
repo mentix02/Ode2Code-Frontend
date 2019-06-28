@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import {toTitleCase} from '../utils/text';
 import { Jumbotron, Container } from 'react-bootstrap';
-import TutorialList from "../components/TutorialList";
+import TutorialList from '../components/TutorialList';
 
 class SeriesDetail extends Component {
 
@@ -49,6 +51,9 @@ class SeriesDetail extends Component {
             <h1 className="display-4">
               {series.name}
             </h1>
+            <Link to={`/t/${series.type_of}`}>
+              <h4 className="text-muted">{toTitleCase(series.type_of || "")}</h4>
+            </Link>
             <p>
               {series.description}
             </p>
