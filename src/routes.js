@@ -8,6 +8,7 @@ import Logout from './pages/Logout';
 import Series from './pages/Series';
 import Timeline from './pages/Timeline';
 import Tutorials from './pages/Tutorials';
+import NewSeries from './pages/NewSeries';
 import FourOhFour from './pages/FourOhFour';
 import Algorithms from './pages/Algorithms';
 import SeriesType from './pages/SeriesType';
@@ -27,6 +28,7 @@ const BaseRouter = () => (
     <Route path="/logout" component={Logout} />
     <Route path="/timeline" component={Timeline} />
     <Route path="/series" exact component={Series} />
+    <Route path="/new/series" component={NewSeries} />
     <Route path="/tutorials" component={Tutorials} />
     <Route path="/t/:slug" component={SeriesType} />
     <Route path="/s/:slug" component={SeriesDetail} />
