@@ -14,6 +14,7 @@ import Algorithms from './pages/Algorithms';
 import SeriesType from './pages/SeriesType';
 import SeriesDetail from './pages/SeriesDetail';
 import Contributors from './pages/Contributors';
+import TutorialDetail from './pages/TutorialDetail';
 import DataStructures from './pages/DataStructures';
 
 import { Route, Switch } from 'react-router-dom';
@@ -33,6 +34,7 @@ const BaseRouter = () => (
     <Route path="/st/:slug" component={SeriesType} />
     <Route path="/s/:slug" component={SeriesDetail} />
     <Route path="/algorithms" component={Algorithms} />
+    <Route path="/t/:slug" component={TutorialDetail} />
     <Route path="/contributors" component={Contributors} />
     <Route path="/404" component={FourOhFour} status={404} />
     <Route path="/data_structures" component={DataStructures} />

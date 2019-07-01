@@ -10,6 +10,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Container from 'react-bootstrap/Container';
 import InfiniteScroll from 'react-infinite-scroller';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import { LinkContainer } from 'react-router-bootstrap';
 import {isAuthorsPost, isLoggedIn} from '../utils/auth';
 
 class TutorialList extends Component {
@@ -201,7 +202,9 @@ class TutorialList extends Component {
                             </Card.Text>
                             <div className="d-flex justify-content-between align-items-center">
                               <ButtonGroup className="shadow-sm">
-                                <Button size="sm" variant="outline-secondary">Read</Button>
+                                <LinkContainer to={`/t/${tutorial.slug}`}>
+                                  <Button size="sm" variant="outline-secondary">Read</Button>
+                                </LinkContainer>
                                 <Button size="sm" variant={
                                   this.state.likedTutorialIds.includes(tutorial.id) ? 'danger' : 'outline-danger'
                                 } onClick={() => this.likeButtonClick(tutorial.id)}>
