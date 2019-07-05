@@ -164,24 +164,34 @@ class TopNavbar extends Component {
                       write tutorial
                     </Nav.Link>
                   </LinkContainer>
-                  <LinkContainer to="/account">
-                    <Nav.Link>{
-                        JSON.parse(localStorage.getItem('author')).user.username
-                      }</Nav.Link>
-                  </LinkContainer>
-                  <LinkContainer to="/logout">
-                    <Nav.Link>logout</Nav.Link>
-                  </LinkContainer>
+                  <NavDropdown title={JSON.parse(localStorage.getItem('author')).user.username}>
+                    <LinkContainer to="/account">
+                      <NavDropdown.Item>
+                        account
+                      </NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/manage">
+                      <NavDropdown.Item>
+                        manage
+                      </NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Divider/>
+                    <LinkContainer to="/logout">
+                      <NavDropdown.Item>
+                        logout
+                      </NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
                 </Nav>
 
                 :
 
                 <Nav style={{paddingLeft: this.state.leftMobilePadding, paddingTop: this.state.topMobilePadding}}>
                   <LinkContainer to="/login">
-                    <Nav.Link>Login</Nav.Link>
+                    <Nav.Link>login</Nav.Link>
                   </LinkContainer>
                   <LinkContainer to="/register">
-                    <Nav.Link>Register</Nav.Link>
+                    <Nav.Link>register</Nav.Link>
                   </LinkContainer>
                 </Nav>
 
