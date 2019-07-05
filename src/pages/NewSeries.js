@@ -121,7 +121,7 @@ class NewSeries extends Component {
               <hr/>
               <Form.Row style={{paddingTop: '10px'}}>
                 <Form.Group as={Col} controlId="validationCustom03">
-                  <FormControl type="url" as="select" onChange={this.handleInputChange} name="type_of">
+                  <FormControl type="text" as="select" onChange={this.handleInputChange} name="type_of">
                     <option value="design">design</option>
                     <option value="language">language</option>
                     <option value="algorithms">algorithms</option>
