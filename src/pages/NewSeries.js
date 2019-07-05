@@ -82,8 +82,6 @@ class NewSeries extends Component {
     formData.set('description', this.state.description);
     formData.set('token', localStorage.getItem('token'));
 
-    console.log(this.state);
-
     axios({
       method: 'post',
       data: formData,
