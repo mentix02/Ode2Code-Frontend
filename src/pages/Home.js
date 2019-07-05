@@ -35,11 +35,11 @@ class Home extends Component {
               <br/>
               <br/>
               <Link to="/blog" className="btn btn-primary">
-                Blog
+                blog
               </Link>
               &nbsp;&nbsp;
               <Link to="/tutorials" className="btn btn-success">
-                Tutorials
+                tutorials
               </Link>
             </p>
           </Container>
