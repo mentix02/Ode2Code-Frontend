@@ -93,7 +93,7 @@ class TopNavbar extends Component {
               <LinkContainer to="/blog">
                 <Nav.Link>blog</Nav.Link>
               </LinkContainer>
-              <NavDropdown title="references">
+              <NavDropdown title="types">
                 <LinkContainer to="/algorithms">
                   <NavDropdown.Item>
                     algorithms
