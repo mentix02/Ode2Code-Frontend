@@ -119,7 +119,7 @@ class NewSeries extends Component {
                 </InputGroup>
               </Form.Row>
               <hr/>
-              <Form.Row style={{paddingTop: '10px'}}>
+              <Form.Row>
                 <Form.Group as={Col} controlId="validationCustom03">
                   <FormControl type="text" as="select" onChange={this.handleInputChange} name="type_of">
                     <option value="design">design</option>
@@ -133,7 +133,7 @@ class NewSeries extends Component {
                   {this.state.type_of === 'other' ? <FormControl name="type_of" onChange={this.handleInputChange} /> : ''}
                 </Form.Group>
               </Form.Row>
-              <Form.Row style={{paddingTop: '10px'}}>
+              <Form.Row>
                 <Form.Group as={Col} controlId="validationCustom02">
                   <FormControl type="url" name="thumbnail" placeholder={
                     `thumbnail url for ${this.state.name ? this.state.name : 'series'}`} required onChange={this.handleInputChange} />
