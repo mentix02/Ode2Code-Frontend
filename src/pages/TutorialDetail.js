@@ -55,8 +55,8 @@ class TutorialDetail extends Component {
     document.title = toTitleCase(tutorial.title || '');
     const series_slug = tutorial.series.replace(/\s/g, '-').toLowerCase();
 
-    let content = tutorial.content || '';
-    /*content = content.split('\n').map((para, index) => {
+    /*let content = tutorial.content || '';
+    content = content.split('\n').map((para, index) => {
       return <p key={index}>{para}</p>
     });*/
 
