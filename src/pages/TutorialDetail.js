@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
+import Remarkable from 'remarkable';
 import { Link } from 'react-router-dom';
 import { toTitleCase } from '../utils/text';
 import { Jumbotron, Container } from 'react-bootstrap';
@@ -11,6 +12,7 @@ class TutorialDetail extends Component {
     super(props);
     this.state = {
       tutorial: {
+        content: '',
         series: '',
         author: {
           user: {
@@ -35,6 +37,13 @@ class TutorialDetail extends Component {
     );
   }
 
+  getRawMarkup() {
+    const md = new Remarkable();
+    return {
+      __html: md.render(this.state.tutorial.content || '')
+    }
+  }
+
   componentDidMount() {
     this.getTutorial();
   }
@@ -44,12 +53,12 @@ class TutorialDetail extends Component {
     const {tutorial} = this.state;
     const {username} = tutorial.author.user;
     document.title = toTitleCase(tutorial.title || '');
-    const series_slug = tutorial.series.replace(' ', '-').toLowerCase();
+    const series_slug = tutorial.series.replace(/\s/g, '-').toLowerCase();
 
     let content = tutorial.content || '';
-    content = content.split('\n').map((para, index) => {
+    /*content = content.split('\n').map((para, index) => {
       return <p key={index}>{para}</p>
-    });
+    });*/
 
     return (
       <div>
@@ -63,9 +72,7 @@ class TutorialDetail extends Component {
             </h5>
             <h5 className="text-muted" style={{fontSize: '117%'}}>{tutorial.description}</h5>
             <br/>
-            <div>
-              {content}
-            </div>
+            <div dangerouslySetInnerHTML={this.getRawMarkup()} />
           </Container>
         </Jumbotron>
       </div>
