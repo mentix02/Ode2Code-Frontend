@@ -11,4 +11,13 @@ let isAuthorsPost = (author) => {
   }
 };
 
-export {isLoggedIn, isAuthorsPost};
+let isAuthorsSeries = (author) => {
+  if (!isLoggedIn()) {
+    return false;
+  } else {
+    let username = JSON.parse(localStorage.getItem('author')).user.username;
+    return username === author;
+  }
+};
+
+export {isLoggedIn, isAuthorsPost, isAuthorsSeries};
