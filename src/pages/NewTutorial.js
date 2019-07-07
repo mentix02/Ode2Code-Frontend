@@ -3,13 +3,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import MarkdownInput from '@opuscapita/react-markdown';
 import {
-  Button,
   Col,
-  Container,
   Form,
-  FormControl,
-  InputGroup,
-  Jumbotron
+  Button,
+  Container,
+  Jumbotron,
+  FormControl
 } from 'react-bootstrap';
 
 class NewTutorial extends Component {
@@ -21,6 +20,7 @@ class NewTutorial extends Component {
     super(props);
     this.state = {
       series: [],
+      draft: false,
       checking: null,
       validated: false,
       is_available: true,
@@ -77,15 +77,32 @@ class NewTutorial extends Component {
       validated: true
     });
 
+    console.log(this.state);
+
     let formData = new FormData();
     formData.set('title', this.state.title);
+    formData.set('draft', this.state.draft);
+    formData.set('content', this.state.content);
     formData.set('series_id', this.state.series_id);
+    formData.set('description', this.state.description);
     formData.set('token', localStorage.getItem('token'));
 
+    const url = '/api/tutorials/new/';
+
     axios({
+      url: url,
       method: 'post',
-      url: '/api/'
-    });
+      data: formData,
+      config: {headers:{'Content-Type': 'multipart/form-data'}}
+    }).then(
+      res => {
+        document.location = `/t/${res.data.detail.slug}`;
+      }
+    ).catch(
+      err => {
+        console.log(err.response);
+      }
+    );
 
   }
 
@@ -100,7 +117,7 @@ class NewTutorial extends Component {
           <Container>
             <Form noValidate validated={this.state.validated} onSubmit={e => this.submitTutorialForm(e)}>
               <Form.Row>
-                <Form.Group as={Col} style={{marginBottom: '2px'}} md="4" controlid="validationCustom01">
+                <Form.Group as={Col} style={{marginBottom: '2px'}} md="6" controlid="validationCustom01">
                   <FormControl type="text" onChange={this.handleInputChange} onBlur={this.checkTutorialAvailability}
                                name="title" size="lg" autoComplete="off" placeholder="title for tutorial" required autoFocus />
                   <Form.Control.Feedback type="invalid">please enter a name for new tutorial</Form.Control.Feedback>
@@ -109,7 +126,7 @@ class NewTutorial extends Component {
               <hr/>
               <Form.Row>
                 <Form.Group as={Col} controlId="validationCustom02">
-                  <FormControl type="text" as="select" onChange={this.handleInputChange} name="series_pk">
+                  <FormControl type="text" as="select" onChange={this.handleInputChange} name="series_id">
                     {
                       series.map(
                         (item, index) => (
@@ -117,23 +134,28 @@ class NewTutorial extends Component {
                         )
                       )
                     }
-                    <option value="null">None</option>
+                    <option value="null">Series - none</option>
                   </FormControl>
                 </Form.Group>
               </Form.Row>
-              <Form.Row style={{paddingTop: '10px'}}>
-                <Form.Group as={Col} controlId="validationCustom02">
-                  <FormControl type="url" name="thumbnail" placeholder={
-                    `thumbnail url for ${this.state.title ? this.state.title : 'tutorial'}`} required onChange={this.handleInputChange} />
-                  <Form.Control.Feedback type="invalid">Please enter a url of a thumbnail for new series.</Form.Control.Feedback>
+              <Form.Row>
+                <Form.Group as={Col} controlId="validationCustom03">
+                  <FormControl type="text" as="textarea" name="description"
+                               rows="4" onChange={this.handleInputChange} required
+                               placeholder={`description for ${this.state.title ? this.state.title : 'tutorial'}`} />
                 </Form.Group>
               </Form.Row>
-              <Form.Row style={{paddingBottom: '1px'}}>
-                <Form.Group as={Col} controlId="validationCustom02">
-                  <div style={{height: '40vh', background: '#ffffffff'}}>
+              <Form.Row>
+                <Form.Group as={Col} controlId="validationCustom04">
+                  <div style={{height: '40vh', background: '#ffffffff', fontFamily: 'Arial'}}>
                     <MarkdownInput onChange={this.setContent} name="content" autoFocus={false}
                                    placeholder={`content for ${this.state.title ? this.state.title : 'tutorial'}`} />
                   </div>
+                </Form.Group>
+              </Form.Row>
+              <Form.Row style={{paddingBottom: '1px'}}>
+                <Form.Group as={Col}>
+                  <Form.Check type="checkbox" size="lg" name="draft" label="draft" />
                 </Form.Group>
               </Form.Row>
               <Button type="submit" variant="primary" >create</Button> &nbsp;
