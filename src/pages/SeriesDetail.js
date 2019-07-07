@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { toTitleCase } from '../utils/text';
 import { isAuthorsSeries } from '../utils/auth';
 import TutorialList from '../components/TutorialList';
-import { Jumbotron, Container, Button } from 'react-bootstrap';
+import { Jumbotron, Container } from 'react-bootstrap';
 
 class SeriesDetail extends Component {
 
