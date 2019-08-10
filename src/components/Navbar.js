@@ -76,7 +76,7 @@ class TopNavbar extends Component {
           <Navbar.Brand>
             <Link to="/home">
               <img
-                src={"/android-chrome-512x512.png"}
+                src={"favicon_and_manifest/android-chrome-512x512.png"}
                 width="40"
                 height="40"
                 className="d-inline-block align-top"
