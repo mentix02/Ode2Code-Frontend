@@ -32,7 +32,6 @@ class TutorialList extends Component {
 
   componentDidMount() {
     get_tutorials(this.props.source).then(data => {
-      console.log('TUTORIAL LIST DATA : ', data);
       if (!data['results']) {
         toast.error('Could not load tutorials.', {
           position: toast.POSITION.BOTTOM_CENTER
