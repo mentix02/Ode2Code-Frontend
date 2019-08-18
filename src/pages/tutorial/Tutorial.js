@@ -49,8 +49,8 @@ class Tutorial extends Component {
     const {tutorial} = this.state;
     const {username} = tutorial.author.user;
     const timestamp = tutorial.timestamp.replace('th', '<sup>th</sup>');
-    const series_slug = tutorial.series.replace(/\s/g, '-').toLowerCase();
     document.title = toTitleCase(tutorial.title || '');
+    const series_slug = tutorial.series ? tutorial.series.replace(/\s/g, '-').toLowerCase() : '';
 
     const authenticatedToolTip = <Tooltip>
       {tutorial.author.user.username} is authenticated
@@ -80,8 +80,13 @@ class Tutorial extends Component {
                 tutorial.author.authenticated ? <OverlayTrigger overlay={authenticatedToolTip}>
                   <small className="fas fa-check text-info" />
                 </OverlayTrigger> : ''
-              } on <span dangerouslySetInnerHTML={{__html: timestamp}} /> under
-              <Link style={linkNoStyle} to={`/s/${series_slug}`}> {tutorial.series}</Link>
+              } on <span dangerouslySetInnerHTML={{__html: timestamp}} /> 
+              {
+                tutorial.series ?
+                  <div> under <Link style={linkNoStyle} to={`/s/${series_slug}`}> {tutorial.series}</Link></div>
+                  :
+                  ''
+              }
               <br/>
               {tutorial.description}
             </small>
