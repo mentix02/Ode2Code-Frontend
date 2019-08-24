@@ -57,7 +57,6 @@ class Manage extends Component {
       case 'tutorial':
         delete_tutorial(slug).then(data => this.updateContent(index));
         toast.warn(`Deleted tutorial.`, options);
-
         break;
       case 'series':
         delete_series(slug).then(data => {document.location.reload()});
