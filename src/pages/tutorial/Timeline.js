@@ -36,7 +36,7 @@ class Timeline extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://192.168.100.7:5005/timeline/').then(res => {
+    axios.get('http://192.168.100.8:5555/timeline/').then(res => {
       this.setState({
         data: res.data
       });
