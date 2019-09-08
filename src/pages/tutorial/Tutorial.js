@@ -12,6 +12,8 @@ import Popover from 'react-bootstrap/Popover';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Button from "react-bootstrap/Button";
 
 class Tutorial extends Component {
 
@@ -83,12 +85,19 @@ class Tutorial extends Component {
               } on <span dangerouslySetInnerHTML={{__html: timestamp}} /> 
               {
                 tutorial.series ?
-                  <div> under <Link style={linkNoStyle} to={`/s/${series_slug}`}> {tutorial.series}</Link></div>
+                  <span> under <Link style={linkNoStyle} to={`/s/${series_slug}`}> {tutorial.series}</Link></span>
                   :
                   ''
               }
               <br/>
               {tutorial.description}
+              <br/>
+              <hr/>
+              <ButtonGroup>
+                <Button variant="light" disabled>Manage</Button>
+                <Button variant="success"><i className="fas fa-pencil-alt" /></Button>
+                <Button variant="danger"><i className="fas fa-trash" /></Button>
+              </ButtonGroup>
             </small>
           </h4>
           <hr/>

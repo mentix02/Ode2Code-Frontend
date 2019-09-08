@@ -9,17 +9,28 @@ import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import { isMobile } from 'react-device-detect';
+import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { LinkContainer } from 'react-router-bootstrap';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 class Navigation extends Component {
 
   constructor(props) {
     super(props);
+
+    const search_types = [
+      'Post',
+      'Series',
+      'Tutorials'
+    ];
+
     this.state = {
+      search_types: search_types,
+      search_type: search_types[2],
       topMobilePadding: isMobile ? '5px' : '0px',
       leftMobilePadding: isMobile ? '0px' : '20px',
       authenticated: !!localStorage.getItem('token'),
@@ -40,7 +51,7 @@ class Navigation extends Component {
         draggable: true,
         autoClose: false,
         position: toast.POSITION.BOTTOM_CENTER,
-        onClose: ({arg}) => localStorage.setItem('showCookiesToast', 'false'),
+        onClose: ({arg}) => {localStorage.setItem('showCookiesToast', 'false')},
       });
     }
 
@@ -119,16 +130,29 @@ class Navigation extends Component {
             </Nav>
             <Form inline>
               <InputGroup>
+                <DropdownButton variant="outline-warning" as={InputGroup.Prepend} title={this.state.search_type} >
+                  {
+                    this.state.search_types.map(
+                      (search_type, index) => (
+                        <Dropdown.Item active={this.state.search_type === search_type}
+                                       key={index} type="button" as="button" onClick={() => {
+                                         this.setState({search_type: search_type})
+                        }}>{search_type}</Dropdown.Item>
+                      )
+                    )
+                  }
+                </DropdownButton>
                 <FormControl
                   style={{width: '270px'}}
                   name="query"
                   type="search"
                   autoComplete="off"
                   placeholder="Search"
+                  autoFocus={true}
                 />
                 <InputGroup.Append>
                   <Button variant="outline-info">
-                    <i className="fas fa-search"> </i>
+                    <i className="fas fa-search" />
                   </Button>
                 </InputGroup.Append>
               </InputGroup>
