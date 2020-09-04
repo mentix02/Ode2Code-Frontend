@@ -9,7 +9,7 @@
     "draft-js": "^0.11.0",
     "highlight.js": "^9.15.9",
     "markdown-it": "^9.1.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
     "query-string": "^6.8.2",
     "react": "^16.8.6",
